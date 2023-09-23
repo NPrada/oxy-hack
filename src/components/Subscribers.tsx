@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useState } from "react";
 import { BsPersonCircle } from "react-icons/bs";
-import { getAllSubscribers } from "../utils/fetchNotify";
+import { getAllSubscribers } from "../../utils/fetchNotify";
 import Link from "next/link";
 
 function Subscribers() {

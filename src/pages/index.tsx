@@ -21,13 +21,15 @@ import "@web3inbox/widget-react/dist/compiled.css";
 import { useAccount, usePublicClient, useSignMessage } from "wagmi";
 import { FaBell, FaBellSlash, FaPause, FaPlay } from "react-icons/fa";
 import { BsPersonFillCheck, BsSendFill } from "react-icons/bs";
-import useSendNotification from "../utils/useSendNotification";
+import useSendNotification from "../../utils/useSendNotification";
 import { useInterval } from "usehooks-ts";
 import Preferences from "../components/Preferences";
 import Messages from "../components/Messages";
 import Subscription from "../components/Subscription";
-import { sendNotification } from "../utils/fetchNotify";
+import { sendNotification } from "../../utils/fetchNotify";
 import Subscribers from "../components/Subscribers";
+import { Layout } from "../components/layout";
+import Link from "next/link";
 
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID as string;
 const appDomain = process.env.NEXT_PUBLIC_APP_DOMAIN as string;
@@ -159,96 +161,37 @@ const Home: NextPage = () => {
   }, 12000);
 
   return (
-    <Flex w="full" flexDirection={"column"} maxW="700px">
-      <Image
-        aria-label="WalletConnect"
-        src={
-          colorMode === "dark"
-            ? "/WalletConnect-white.svg"
-            : "/WalletConnect-black.svg"
-        }
-      />
-      <Heading alignSelf={"center"} textAlign={"center"} mb={6}>
-        Web3Inbox hooks
-      </Heading>
+    <Layout>
 
-      <Flex flexDirection="column" gap={4}>
-        {isSubscribed ? (
-          <Flex flexDirection={"column"} alignItems="center" gap={4}>
-            <Button
-              leftIcon={<BsSendFill />}
-              variant="outline"
-              onClick={handleTestNotification}
-              isDisabled={!isW3iInitialized}
-              colorScheme="purple"
-              rounded="full"
-              isLoading={isSending}
-              loadingText="Sending..."
-            >
-              Send test notification
-            </Button>
-            <Button
-              leftIcon={isBlockNotificationEnabled ? <FaPause /> : <FaPlay />}
-              variant="outline"
-              onClick={() =>
-                setIsBlockNotificationEnabled((isEnabled) => !isEnabled)
-              }
-              isDisabled={!isW3iInitialized}
-              colorScheme={isBlockNotificationEnabled ? "orange" : "blue"}
-              rounded="full"
-            >
-              {isBlockNotificationEnabled ? "Pause" : "Resume"} block
-              notifications
-            </Button>
-            <Button
-              leftIcon={<FaBellSlash />}
-              onClick={unsubscribe}
-              variant="outline"
-              isDisabled={!isW3iInitialized || !account}
-              colorScheme="red"
-              isLoading={isUnsubscribing}
-              loadingText="Unsubscribing..."
-              rounded="full"
-            >
-              Unsubscribe
-            </Button>
-          </Flex>
-        ) : (
-          <Tooltip
-            label={
-              !Boolean(address)
-                ? "Connect your wallet first."
-                : "Register your account."
-            }
-            hidden={Boolean(account)}
-          >
-            <Button
-              leftIcon={<FaBell />}
-              onClick={subscribe}
-              colorScheme="cyan"
-              rounded="full"
-              variant="outline"
-              w="fit-content"
-              alignSelf="center"
-              isLoading={isSubscribing}
-              loadingText="Subscribing..."
-              isDisabled={!Boolean(address) || !Boolean(account)}
-            >
-              Subscribe
-            </Button>
-          </Tooltip>
-        )}
+      <div className="flex space-x-4 max-w-4xl m-auto">
+        <Link href="/borrow" className="flex-1">
+          <div className="bg-[#52472E] flex justify-center items-center rounded-lg hover:bg-opacity-90 cursor-pointer transition">
+            <div className="py-28 text-white text-2xl font-bold group-hover:text-opacity-80 transition">
+              I want to Borrow
+            </div>
+          </div>
+        </Link>
+        <Link href="/lend" className="flex-1">
+          <div className="bg-[#52472E] flex justify-center items-center rounded-lg hover:bg-opacity-90 cursor-pointer transition">
+            <div className="py-28 text-white text-2xl font-bold group-hover:text-opacity-80 transition">
+              I want to Lend
+            </div>
+          </div>
+        </Link>
+      </div>
+    </Layout>
 
-        {isSubscribed && (
-          <Accordion defaultIndex={[1]} allowToggle mt={10} rounded="xl">
-            <Subscription />
-            <Messages />
-            <Preferences />
-            <Subscribers />
-          </Accordion>
-        )}
-      </Flex>
-    </Flex>
+    // <Flex w="full" flexDirection={"column"} maxW="700px">
+    //   <Image
+    //     aria-label="WalletConnect"
+    //     src={
+    //       colorMode === "dark"
+    //         ? "/WalletConnect-white.svg"
+    //         : "/WalletConnect-black.svg"
+    //     }
+    //   />
+
+    // </Flex>
   );
 };
 

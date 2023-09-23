@@ -8,6 +8,7 @@ import "@web3inbox/widget-react/dist/compiled.css";
 
 import { createWeb3Modal, defaultWagmiConfig } from "@web3modal/wagmi/react";
 import Navbar from "../components/core/Navbar";
+import "../styles/globals.css";
 
 // 1. Get projectID at https://cloud.walletconnect.com
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID as string;
@@ -23,39 +24,29 @@ const wagmiConfig = defaultWagmiConfig({
   appName: "GM Hackers",
 });
 
-createWeb3Modal({ wagmiConfig, projectId, chains });
+createWeb3Modal({
+  wagmiConfig,
+  projectId,
+  chains,
+  themeVariables: {
+    '--wcm-accent-color': '#141414',
+    "--wcm-accent-fill-color": 'red',
+    "--w3m-color-mix": "#00BB7F",
+    "--w3m-color-mix-strength": 40,
+  },
+});
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <ChakraProvider theme={theme}>
-        <WagmiConfig config={wagmiConfig}>
-          <Grid
-            templateAreas={`"header" "main" "footer"`}
-            w="100%"
-            width="100%"
-            gridTemplateRows={"100px 3f 40px "}
-            gridTemplateColumns={"1fr"}
-            paddingY="2em"
-          >
-            <GridItem area={"header"} padding={4}>
-              <Navbar />
-            </GridItem>
-            <GridItem area={"main"} padding={10}>
-              <Flex
-                flexDirection={"column"}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
-                <Component {...pageProps} />
-              </Flex>
-            </GridItem>
-            <GridItem area={"footer"}>
-              <Footer />
-            </GridItem>
-          </Grid>
-        </WagmiConfig>
-      </ChakraProvider>
+      {/* <ChakraProvider theme={theme}> */}
+      {/* @ts-ignore */}
+      <WagmiConfig config={wagmiConfig}>
+        {/* @ts-ignore */}
+
+        <Component {...pageProps} />
+      </WagmiConfig>
+      {/* </ChakraProvider> */}
     </>
   );
 }
