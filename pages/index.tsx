@@ -160,6 +160,7 @@ const Home: NextPage = () => {
 
   return (
     <Flex w="full" flexDirection={"column"} maxW="700px">
+      <h1 className="text-3xl font-bold underline">Hello world!</h1>
       <Image
         aria-label="WalletConnect"
         src={

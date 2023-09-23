@@ -29,7 +29,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <ChakraProvider theme={theme}>
+        {/* @ts-ignore */}
         <WagmiConfig config={wagmiConfig}>
+          {/* @ts-ignore */}
           <Grid
             templateAreas={`"header" "main" "footer"`}
             w="100%"
