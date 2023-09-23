@@ -16,14 +16,14 @@ function Navbar() {
       </div>
       <div className="flex items-center space-x-4">
         <div>
-          <w3m-network-button />
+          {/* <w3m-network-button /> */}
         </div>
         <div>
           <w3m-button label="Connect Wallet" balance="show" />
         </div>
-        <div>
+        {/* <div>
           <CustomWalletButton />
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -28,8 +28,9 @@ createWeb3Modal({
   themeVariables: {
     // '--wcm-accent-color': 'red',
     // "--wcm-accent-fill-color": 'red',
-    "--w3m-color-mix": "black",
-    "--w3m-color-mix-strength": 90,
+    "--w3m-color-mix": "#FDF3C6",
+    "--w3m-color-mix-strength": 20,
+
   },
 });
 
