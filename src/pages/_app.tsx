@@ -1,6 +1,6 @@
 import type { AppProps } from "next/app";
 import { WagmiConfig } from "wagmi";
-import { mainnet } from "wagmi/chains";
+import { mainnet, goerli } from "wagmi/chains";
 import "@web3inbox/widget-react/dist/compiled.css";
 
 import { createWeb3Modal, defaultWagmiConfig } from "@web3modal/wagmi/react";
@@ -14,7 +14,7 @@ if (!projectId) {
 }
 
 // 2. Configure Web3Modal
-const chains = [mainnet];
+const chains = [goerli];
 const wagmiConfig = defaultWagmiConfig({
   chains,
   projectId,
@@ -28,8 +28,8 @@ createWeb3Modal({
   themeVariables: {
     // '--wcm-accent-color': 'red',
     // "--wcm-accent-fill-color": 'red',
-    "--w3m-color-mix": "green",
-    "--w3m-color-mix-strength": 30,
+    "--w3m-color-mix": "black",
+    "--w3m-color-mix-strength": 90,
   },
 });
 

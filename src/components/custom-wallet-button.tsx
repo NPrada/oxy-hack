@@ -1,11 +1,20 @@
 import { useWeb3Modal } from "@web3modal/react";
 import { useState } from "react";
-import { useAccount, useDisconnect } from "wagmi";
+import { useAccount, useBalance, useDisconnect } from "wagmi";
+import Nossr from "./nossr";
+import { USDCAddress } from "../constants/addresses";
 
 export function CustomWalletButton() {
   const [loading, setLoading] = useState(false);
   const { open } = useWeb3Modal();
-  const { isConnected } = useAccount();
+  const { isConnected, address } = useAccount();
+
+  const { data, isError, isLoading } = useBalance({
+    address,
+    token: USDCAddress,
+  });
+
+  console.log("data", isError, isLoading, data);
   const { disconnect } = useDisconnect();
   const label = isConnected ? "Disconnect" : "Connect Custom";
 
@@ -26,8 +35,10 @@ export function CustomWalletButton() {
   }
 
   return (
-    <button onClick={onClick} disabled={loading}>
-      {loading ? "Loading..." : label}
-    </button>
+    <Nossr>
+      <button onClick={onClick} disabled={loading}>
+        {loading ? "Loading..." : label}
+      </button>
+    </Nossr>
   );
 }
