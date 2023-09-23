@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { CustomWalletButton } from "../custom-wallet-button";
 
 function Navbar() {
   return (
@@ -19,6 +20,9 @@ function Navbar() {
         </div>
         <div>
           <w3m-button label="Connect Wallet" balance="show" />
+        </div>
+        <div>
+          <CustomWalletButton />
         </div>
       </div>
     </div>

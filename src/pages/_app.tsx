@@ -29,10 +29,10 @@ createWeb3Modal({
   projectId,
   chains,
   themeVariables: {
-    '--wcm-accent-color': '#141414',
-    "--wcm-accent-fill-color": 'red',
-    "--w3m-color-mix": "#00BB7F",
-    "--w3m-color-mix-strength": 40,
+    // '--wcm-accent-color': 'red',
+    // "--wcm-accent-fill-color": 'red',
+    "--w3m-color-mix": "green",
+    "--w3m-color-mix-strength": 30,
   },
 });
 

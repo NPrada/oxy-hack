@@ -5,6 +5,7 @@ import "@web3inbox/widget-react/dist/compiled.css";
 
 import { Layout } from "../components/layout";
 import { LendAssetCard } from "../components/lend-asset-card";
+import { BorrowAssetCard } from "../components/borrow-asset-card";
 
 // const projectId = process.env.NEXT_PUBLIC_PROJECT_ID as string;
 // const appDomain = process.env.NEXT_PUBLIC_APP_DOMAIN as string;
@@ -12,7 +13,7 @@ import { LendAssetCard } from "../components/lend-asset-card";
 const Home: NextPage = () => {
   return (
     <Layout>
-      <LendAssetCard />
+      <BorrowAssetCard />
     </Layout>
   );
 };
