@@ -28,7 +28,7 @@ import Messages from "../components/Messages";
 import Subscription from "../components/Subscription";
 import { sendNotification } from "../utils/fetchNotify";
 import Subscribers from "../components/Subscribers";
-import Layout from "../components/layout";
+import { Layout } from "../components/layout";
 
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID as string;
 const appDomain = process.env.NEXT_PUBLIC_APP_DOMAIN as string;

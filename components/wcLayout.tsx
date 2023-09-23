@@ -34,5 +34,3 @@ export const WCLayout = ({ children }: { children: any }) => {
     </Grid>
   );
 };
-
-export default Layout;

@@ -32,30 +32,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         {/* @ts-ignore */}
         <WagmiConfig config={wagmiConfig}>
           {/* @ts-ignore */}
-          <Grid
-            templateAreas={`"header" "main" "footer"`}
-            w="100%"
-            width="100%"
-            gridTemplateRows={"100px 3f 40px "}
-            gridTemplateColumns={"1fr"}
-            paddingY="2em"
-          >
-            <GridItem area={"header"} padding={4}>
-              <Navbar />
-            </GridItem>
-            <GridItem area={"main"} padding={10}>
-              <Flex
-                flexDirection={"column"}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
-                <Component {...pageProps} />
-              </Flex>
-            </GridItem>
-            <GridItem area={"footer"}>
-              <Footer />
-            </GridItem>
-          </Grid>
+
+          <Component {...pageProps} />
         </WagmiConfig>
       </ChakraProvider>
     </>
