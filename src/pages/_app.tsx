@@ -1,9 +1,6 @@
 import type { AppProps } from "next/app";
-import { ChakraProvider, Box, Flex, Grid, GridItem } from "@chakra-ui/react";
 import { WagmiConfig } from "wagmi";
 import { mainnet } from "wagmi/chains";
-import { theme } from "../styles/theme";
-import Footer from "../components/core/Footer";
 import "@web3inbox/widget-react/dist/compiled.css";
 
 import { createWeb3Modal, defaultWagmiConfig } from "@web3modal/wagmi/react";
