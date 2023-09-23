@@ -28,7 +28,7 @@ import Messages from "../components/Messages";
 import Subscription from "../components/Subscription";
 import { sendNotification } from "../utils/fetchNotify";
 import Subscribers from "../components/Subscribers";
-import Layout from "../components/layout";
+import { WCLayout } from "../components/wcLayout";
 
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID as string;
 const appDomain = process.env.NEXT_PUBLIC_APP_DOMAIN as string;
@@ -160,21 +160,99 @@ const Home: NextPage = () => {
   }, 12000);
 
   return (
-    <Layout>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-    </Layout>
+    <WCLayout>
+      <Flex w="full" flexDirection={"column"} maxW="700px">
+        <h1 className="text-3xl font-bold underline">Hello world!</h1>
+        <Image
+          aria-label="WalletConnect"
+          src={
+            colorMode === "dark"
+              ? "/WalletConnect-white.svg"
+              : "/WalletConnect-black.svg"
+          }
+        />
+        <Heading alignSelf={"center"} textAlign={"center"} mb={6}>
+          Web3Inbox hooks
+        </Heading>
 
-    // <Flex w="full" flexDirection={"column"} maxW="700px">
-    //   <Image
-    //     aria-label="WalletConnect"
-    //     src={
-    //       colorMode === "dark"
-    //         ? "/WalletConnect-white.svg"
-    //         : "/WalletConnect-black.svg"
-    //     }
-    //   />
+        <Flex flexDirection="column" gap={4}>
+          {isSubscribed ? (
+            <Flex flexDirection={"column"} alignItems="center" gap={4}>
+              <Button
+                leftIcon={<BsSendFill />}
+                variant="outline"
+                onClick={handleTestNotification}
+                isDisabled={!isW3iInitialized}
+                colorScheme="purple"
+                rounded="full"
+                isLoading={isSending}
+                loadingText="Sending..."
+              >
+                Send test notification
+              </Button>
+              <Button
+                leftIcon={isBlockNotificationEnabled ? <FaPause /> : <FaPlay />}
+                variant="outline"
+                onClick={() =>
+                  setIsBlockNotificationEnabled((isEnabled) => !isEnabled)
+                }
+                isDisabled={!isW3iInitialized}
+                colorScheme={isBlockNotificationEnabled ? "orange" : "blue"}
+                rounded="full"
+              >
+                {isBlockNotificationEnabled ? "Pause" : "Resume"} block
+                notifications
+              </Button>
+              <Button
+                leftIcon={<FaBellSlash />}
+                onClick={unsubscribe}
+                variant="outline"
+                isDisabled={!isW3iInitialized || !account}
+                colorScheme="red"
+                isLoading={isUnsubscribing}
+                loadingText="Unsubscribing..."
+                rounded="full"
+              >
+                Unsubscribe
+              </Button>
+            </Flex>
+          ) : (
+            <Tooltip
+              label={
+                !Boolean(address)
+                  ? "Connect your wallet first."
+                  : "Register your account."
+              }
+              hidden={Boolean(account)}
+            >
+              <Button
+                leftIcon={<FaBell />}
+                onClick={subscribe}
+                colorScheme="cyan"
+                rounded="full"
+                variant="outline"
+                w="fit-content"
+                alignSelf="center"
+                isLoading={isSubscribing}
+                loadingText="Subscribing..."
+                isDisabled={!Boolean(address) || !Boolean(account)}
+              >
+                Subscribe
+              </Button>
+            </Tooltip>
+          )}
 
-    // </Flex>
+          {isSubscribed && (
+            <Accordion defaultIndex={[1]} allowToggle mt={10} rounded="xl">
+              <Subscription />
+              <Messages />
+              <Preferences />
+              <Subscribers />
+            </Accordion>
+          )}
+        </Flex>
+      </Flex>
+    </WCLayout>
   );
 };
 
