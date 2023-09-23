@@ -8,6 +8,7 @@ import "@web3inbox/widget-react/dist/compiled.css";
 
 import { createWeb3Modal, defaultWagmiConfig } from "@web3modal/wagmi/react";
 import Navbar from "../components/core/Navbar";
+import "../styles/globals.css";
 
 // 1. Get projectID at https://cloud.walletconnect.com
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID as string;
@@ -23,19 +24,28 @@ const wagmiConfig = defaultWagmiConfig({
   appName: "GM Hackers",
 });
 
-createWeb3Modal({ wagmiConfig, projectId, chains });
+createWeb3Modal({
+  wagmiConfig,
+  projectId,
+  chains,
+  themeVariables: {
+    
+    "--w3m-color-mix": "#00BB7F",
+    "--w3m-color-mix-strength": 40,
+  },
+});
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <ChakraProvider theme={theme}>
+      {/* <ChakraProvider theme={theme}> */}
+      {/* @ts-ignore */}
+      <WagmiConfig config={wagmiConfig}>
         {/* @ts-ignore */}
-        <WagmiConfig config={wagmiConfig}>
-          {/* @ts-ignore */}
 
-          <Component {...pageProps} />
-        </WagmiConfig>
-      </ChakraProvider>
+        <Component {...pageProps} />
+      </WagmiConfig>
+      {/* </ChakraProvider> */}
     </>
   );
 }

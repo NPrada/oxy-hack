@@ -21,12 +21,12 @@ import "@web3inbox/widget-react/dist/compiled.css";
 import { useAccount, usePublicClient, useSignMessage } from "wagmi";
 import { FaBell, FaBellSlash, FaPause, FaPlay } from "react-icons/fa";
 import { BsPersonFillCheck, BsSendFill } from "react-icons/bs";
-import useSendNotification from "../utils/useSendNotification";
+import useSendNotification from "../../utils/useSendNotification";
 import { useInterval } from "usehooks-ts";
 import Preferences from "../components/Preferences";
 import Messages from "../components/Messages";
 import Subscription from "../components/Subscription";
-import { sendNotification } from "../utils/fetchNotify";
+import { sendNotification } from "../../utils/fetchNotify";
 import Subscribers from "../components/Subscribers";
 import { WCLayout } from "../components/wcLayout";
 

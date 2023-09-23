@@ -21,12 +21,12 @@ import "@web3inbox/widget-react/dist/compiled.css";
 import { useAccount, usePublicClient, useSignMessage } from "wagmi";
 import { FaBell, FaBellSlash, FaPause, FaPlay } from "react-icons/fa";
 import { BsPersonFillCheck, BsSendFill } from "react-icons/bs";
-import useSendNotification from "../utils/useSendNotification";
+import useSendNotification from "../../utils/useSendNotification";
 import { useInterval } from "usehooks-ts";
 import Preferences from "../components/Preferences";
 import Messages from "../components/Messages";
 import Subscription from "../components/Subscription";
-import { sendNotification } from "../utils/fetchNotify";
+import { sendNotification } from "../../utils/fetchNotify";
 import Subscribers from "../components/Subscribers";
 import { Layout } from "../components/layout";
 
@@ -161,7 +161,16 @@ const Home: NextPage = () => {
 
   return (
     <Layout>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
+      <h1
+        style={{
+          fontSize: "1.875rem", // corresponds to text-3xl
+          fontWeight: "bold", // corresponds to font-bold
+          textDecoration: "underline", // corresponds to underline
+          color: "#F6EAC5", // corresponds to text-amber-600 (based on default Tailwind palette)
+        }}
+      >
+        Hello world!
+      </h1>
     </Layout>
 
     // <Flex w="full" flexDirection={"column"} maxW="700px">
