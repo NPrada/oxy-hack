@@ -29,7 +29,8 @@ const Home: NextPage = () => {
 
   return (
     <Layout>
-      <LendingList positions={positions} />
+      {/* <LendingList positions={positions} /> */}
+      <LendingList positions={positions}/>
     </Layout>
 
     // <Flex w="full" flexDirection={"column"} maxW="700px">
