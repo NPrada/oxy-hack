@@ -1,58 +1,35 @@
 "use client";
 import type { NextPage } from "next";
-import { useCallback, useEffect, useState } from "react";
-import {
-  Accordion,
-  Button,
-  Flex,
-  Heading,
-  Image,
-  Tooltip,
-  useColorMode,
-  useToast,
-} from "@chakra-ui/react";
-import {
-  useInitWeb3InboxClient,
-  useManageSubscription,
-  useW3iAccount,
-} from "@web3inbox/widget-react";
+
 import "@web3inbox/widget-react/dist/compiled.css";
 
-import { useAccount, usePublicClient, useSignMessage } from "wagmi";
-import { FaBell, FaBellSlash, FaPause, FaPlay } from "react-icons/fa";
-import { BsPersonFillCheck, BsSendFill } from "react-icons/bs";
-import useSendNotification from "../../utils/useSendNotification";
-import { useInterval } from "usehooks-ts";
-import Preferences from "../components/Preferences";
-import Messages from "../components/Messages";
-import Subscription from "../components/Subscription";
-import { sendNotification } from "../../utils/fetchNotify";
-import Subscribers from "../components/Subscribers";
 import { Layout } from "../components/layout";
-import Link from "next/link";
+import { Button } from "../components/button";
+import { useRouter } from "next/router";
 
 // const projectId = process.env.NEXT_PUBLIC_PROJECT_ID as string;
 // const appDomain = process.env.NEXT_PUBLIC_APP_DOMAIN as string;
 
 const Home: NextPage = () => {
+  const positions: LendingPosition[] = [
+    {
+      id: 1,
+      asset: "BTC",
+      amount: 1000,
+      apy: 5,
+    },
+    {
+      id: 2,
+      asset: "USDT",
+      amount: 1000,
+      apy: 5,
+    },
+    // ... other positions
+  ];
+
   return (
     <Layout>
-      <div className="flex space-x-4 max-w-4xl m-auto">
-        <Link href="/borrow" className="flex-1">
-          <div className="bg-[#52472E] flex justify-center items-center rounded-lg hover:bg-opacity-90 cursor-pointer transition">
-            <div className="py-28 text-white text-2xl font-bold group-hover:text-opacity-80 transition">
-              I want to Borrow
-            </div>
-          </div>
-        </Link>
-        <Link href="/lend" className="flex-1">
-          <div className="bg-[#52472E] flex justify-center items-center rounded-lg hover:bg-opacity-90 cursor-pointer transition">
-            <div className="py-28 text-white text-2xl font-bold group-hover:text-opacity-80 transition">
-              I want to Lend
-            </div>
-          </div>
-        </Link>
-      </div>
+      <LendingList positions={positions} />
     </Layout>
 
     // <Flex w="full" flexDirection={"column"} maxW="700px">
@@ -70,3 +47,46 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+interface LendingPosition {
+  id: number;
+  asset: string;
+  amount: number;
+  apy: number;
+}
+
+interface LendingListProps {
+  positions: LendingPosition[];
+}
+
+const LendingList: React.FC<LendingListProps> = ({ positions }) => {
+  const router = useRouter();
+
+  return (
+    <div className="bg-white rounded-lg shadow-md p-4">
+      <h2 className="text-xl font-bold mb-4">Lending Positions</h2>
+      <ul>
+        {positions.map((position) => (
+          <li key={position.id} className="border-b border-gray-200 py-2">
+            <p>
+              <strong>Asset:</strong> {position.asset}
+            </p>
+            <p>
+              <strong>Amount:</strong> {position.amount}
+            </p>
+            <p>
+              <strong>APY:</strong> {position.apy}%
+            </p>
+          </li>
+        ))}
+      </ul>
+      <Button
+        onClick={() => {
+          router.push("/lend-asset");
+        }}
+      >
+        Open Position
+      </Button>
+    </div>
+  );
+};
