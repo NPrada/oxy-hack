@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { Button } from "./button";
+import { useLoansStorage } from "../hooks/storagehooks";
 
 interface LendingListProps {
   positions: Array<{
@@ -8,13 +9,14 @@ interface LendingListProps {
     amount: string;
     apy: number;
     nextPaymentDue: Date;
-    currentCollateralValue: number;
+    currentCollateralValue: number;s
     initialCollateralDeposit: number;
   }>;
 }
 
 const LendingList: React.FC<LendingListProps> = ({ positions }) => {
   const router = useRouter();
+  const { loans } = useLoansStorage()
 
   return (
     <div className="bg-white rounded-lg shadow-md p-4">

@@ -13,8 +13,11 @@ import { parseEther } from "viem";
 import { wBtcAbi } from "../constants/abis/wBtc";
 import { loanRouterAbi } from "../constants/abis/loanRouter";
 import { useRouter } from "next/router";
+import { useLoansStorage } from "../hooks/storagehooks";
+import { LoadingSpinner } from "./loading-spinner";
 
 export const BorrowCard: React.FC = () => {
+  const { loans, saveLoans } = useLoansStorage();
   const router = useRouter();
 
   const {
@@ -40,7 +43,7 @@ export const BorrowCard: React.FC = () => {
     functionName: "createAndBorrow",
   });
 
-  const collaterals = ["BTC", "USDC", "ETH"];
+  const collaterals = ["BTC", "ETH"];
   const loanAssets = ["USDC", "USDT"];
   const intervals = ["weekly", "monthly"];
 
@@ -52,11 +55,13 @@ export const BorrowCard: React.FC = () => {
   const [numberOfPeriods, setNumberOfPeriods] = useState<number>(Number("1"));
 
   if (loanIsCreated) {
+    console.log("loanData", loanData);
+    saveLoans([...loans, loanData]);
     router.push("/borrow?isSuccess=true");
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 flex">
+    <div className="bg-white rounded-lg shadow-md p-4 flex  max-w-3xl m-auto">
       <div className="flex-1 pr-4 border-r border-gray-200">
         {/* Collateral Dropdown */}
         <div className="mb-4">
@@ -146,14 +151,11 @@ export const BorrowCard: React.FC = () => {
         </div>
       </div>
 
-      <div className="pl-4 flex flex-col justify-between">
+      <div className="pl-4 flex flex-col justify-between min-w-[260px]">
         {/* Interest Rate and Gas Cost */}
         <div className="mb-4">
           <p>
-            <strong>Interest Rate:</strong> X% (Replace with your data)
-          </p>
-          <p>
-            <strong>Gas Cost:</strong> Y ETH (Replace with your data)
+            <strong>Interest Rate:</strong> 10%
           </p>
         </div>
 
@@ -197,7 +199,9 @@ export const BorrowCard: React.FC = () => {
               Create
             </button>
           ) : (
-            <div>Loading...</div>
+            <>
+              <div>Loading...</div> <LoadingSpinner />
+            </>
           )}
         </div>
       </div>
