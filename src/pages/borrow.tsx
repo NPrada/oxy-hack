@@ -74,6 +74,39 @@ const Home: NextPage = () => {
       currentOutstandingRepayed: 4000,
       paymentsRemaining: 2,
     },
+    {
+      id: 4,
+      asset: "wBTC",
+      amount: 10,
+      interest: 10,
+      dueDate: dueDate(), // Dec 1, 2023
+      initialDeposit: btcPrice * 10, // 1000 USDT as an initial deposit
+      currentValue: btcPrice * 10 * 0.98, // Current value is 0.95 BTC
+      currentOutstandingRepayed: 4000,
+      paymentsRemaining: 2,
+    },
+    {
+      id: 5,
+      asset: "wBTC",
+      amount: 10,
+      interest: 10,
+      dueDate: dueDate(), // Dec 1, 2023
+      initialDeposit: btcPrice * 10, // 1000 USDT as an initial deposit
+      currentValue: btcPrice * 10 * 0.98, // Current value is 0.95 BTC
+      currentOutstandingRepayed: 4000,
+      paymentsRemaining: 2,
+    },
+    {
+      id: 6,
+      asset: "wBTC",
+      amount: 10,
+      interest: 10,
+      dueDate: dueDate(), // Dec 1, 2023
+      initialDeposit: btcPrice * 10, // 1000 USDT as an initial deposit
+      currentValue: btcPrice * 10 * 0.98, // Current value is 0.95 BTC
+      currentOutstandingRepayed: 4000,
+      paymentsRemaining: 2,
+    },
   ];
 
   return (
