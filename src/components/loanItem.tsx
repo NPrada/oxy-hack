@@ -2,7 +2,11 @@ import * as React from "react";
 import { BorrowList } from "../pages/borrow";
 import { Button } from "@radix-ui/themes";
 import { useContractWrite, useWaitForTransaction } from "wagmi";
-import { USDTAddress, loanRouterAddr } from "../constants/addresses";
+import {
+  USDTAddress,
+  lendingPoolAddr,
+  loanRouterAddr,
+} from "../constants/addresses";
 import { wBtcAbi } from "../constants/abis/wBtc";
 import { loanRouterAbi } from "../constants/abis/loanRouter";
 import { LoadingSpinner } from "./loading-spinner";
@@ -104,7 +108,8 @@ export const LoanRowItem = ({ position, loanData }: LoanRowItemProps) => {
               days
             </p>
             <p>
-              <strong>Remaining payments: </strong> {position.paymentsRemaining} {'(weekly)'}
+              <strong>Remaining payments: </strong> {position.paymentsRemaining}{" "}
+              {"(weekly)"}
             </p>
           </div>
 
@@ -129,10 +134,9 @@ export const LoanRowItem = ({ position, loanData }: LoanRowItemProps) => {
             <Button
               // type="secondary"
               onClick={() => {
-                const lendingPool =
-                  "0x9A31fDAf3B0F9E507d8813c13F289d3E8d0FCC1A";
-
-                const amount = "10";
+                const lendingPool = lendingPoolAddr;
+                console.log("loanContract", loanContract);
+                const amount = "1";
                 write({
                   args: [loanContract, lendingPool, parseEther(amount)],
                 });

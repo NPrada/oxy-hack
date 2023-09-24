@@ -58,7 +58,7 @@ export const BorrowCard: React.FC = () => {
   useEffect(() => {
     if (waitedLoanData != null) {
       //@ts-ignore
-      const loanContract = `0x${waitedLoanData?.logs?.[8].topics[2].slice(26)}`;
+      const loanContract = `0x${waitedLoanData?.logs?.[waitedLoanData?.logs.length -3].topics[2].slice(26)}`;
       console.log("loanContract", loanContract);
       saveLoans([...loans, { ...waitedLoanData, loanContract: loanContract }]);
     }

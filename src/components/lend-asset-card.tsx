@@ -7,7 +7,6 @@ import {
   USDCLendingPool,
   USDTAddress,
   USDTLendingPool,
-  lendingPoolAddr,
 } from "../constants/addresses";
 import { wBtcAbi } from "../constants/abis/wBtc";
 import { parseEther } from "viem";

@@ -1,6 +1,6 @@
 import type { AppProps } from "next/app";
 import { WagmiConfig } from "wagmi";
-import { mainnet, goerli } from "wagmi/chains";
+import { mainnet, goerli, baseGoerli } from "wagmi/chains";
 import "@web3inbox/widget-react/dist/compiled.css";
 import "@radix-ui/themes/styles.css";
 
@@ -16,7 +16,7 @@ if (!projectId) {
 }
 
 // 2. Configure Web3Modal
-const chains = [goerli];
+const chains = [baseGoerli];
 const wagmiConfig = defaultWagmiConfig({
   chains,
   projectId,
