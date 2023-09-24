@@ -11,6 +11,8 @@ import "@web3inbox/widget-react/dist/compiled.css";
 import ArrowDownTray from "@heroicons/react/20/solid/ArrowDownTrayIcon";
 import ArrowUpTray from "@heroicons/react/20/solid/ArrowUpTrayIcon";
 
+import Image from "next/image";
+
 import { useAccount, usePublicClient, useSignMessage } from "wagmi";
 import useSendNotification from "../../utils/useSendNotification";
 import { useInterval } from "usehooks-ts";
@@ -152,31 +154,59 @@ const Home: NextPage = () => {
   return (
     <Layout>
       <div className="flex justify-center pt-8 pb-12">
-        <h1 className="text-3xl font-bold">Protected Term Loans Made Easy!</h1>
+        <h1 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#1AD4FF] to-[#FF307E] text-center">
+          Protected Term Loans<br></br> Made Easy!
+        </h1>
       </div>
 
       <div className="flex justify-center pb-8 gap-40">
-        <Arrow className="h-40 w-40 rotate-45 text-[#dad6d3]/5" />
-        <Arrow className="h-40 w-40 -rotate-45 text-[#dad6d3]/5" />
+        <Image
+          alt="logo svg"
+          key={23}
+          src="/assets/arrow-left.svg"
+          width={120}
+          height={120}
+        />
+        <Image
+          alt="logo svg"
+          key={23}
+          src="/assets/arrow-right.svg"
+          width={120}
+          height={120}
+        />
+        {/* <Arrow className="h-40 w-40 rotate-45 text-[#dad6d3]/5" />
+        <Arrow className="h-40 w-40 -rotate-45 text-[#dad6d3]/5" /> */}
       </div>
 
       <div className="flex space-x-16 max-w-4xl m-auto">
         <Link href="/borrow" className="flex-1">
-          <Card className="flex justify-center items-center rounded-2xl hover:bg-[#1b1b1a]/40 cursor-pointer transition">
-            <div className="py-28 text-white text-2xl font-bold group-hover:text-opacity-80 transition">
+          <Card className="flex justify-center items-center hover:bg-[#1b1b1a]/40 cursor-pointer transition bg-[#202B37] border-none">
+            <div className="py-12 text-white text-2xl font-bold group-hover:text-opacity-80 transition">
               <p className="text-center"> I want to Borrow</p>
-              <div className="flex justify-center pt-4">
-                <ArrowDownTray className="w-20 h-20" />
+              <div className="flex justify-center pt-4 mt-4">
+                <Image
+                  alt="logo svg"
+                  key={23}
+                  src="/assets/icon-borrow.svg"
+                  width={120}
+                  height={120}
+                />
               </div>
             </div>
           </Card>
         </Link>
         <Link href="/lend" className="flex-1">
-          <Card className="flex justify-center items-center rounded-2xl hover:bg-[#1b1b1a]/40 cursor-pointer transition">
-            <div className="block py-28 text-white text-2xl font-bold group-hover:text-opacity-80 transition">
+          <Card className="flex justify-center items-center hover:bg-[#1b1b1a]/40 cursor-pointer transition  bg-[#391221] border-none">
+            <div className="block py-12 text-white text-2xl font-bold group-hover:text-opacity-80 transition">
               <p className="text-center">I want to Lend</p>
-              <div className="flex justify-center pt-4">
-                <ArrowUpTray className="w-20 h-20" />
+              <div className="flex justify-center pt-4 mt-4">
+                <Image
+                  alt="logo svg"
+                  key={23}
+                  src="/assets/icon-lend.svg"
+                  width={120}
+                  height={120}
+                />
               </div>
             </div>
           </Card>
