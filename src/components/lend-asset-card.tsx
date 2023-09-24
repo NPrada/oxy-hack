@@ -102,7 +102,7 @@ export const LendAssetCard: React.FC = () => {
             variant="outline"
             className="mb-2  py-2 px-4"
             onClick={() => {
-              const spender = currencyAddrToUse;
+              const spender = poolAddrToUse;
               const amount = "1000000000000000000";
               writeApprove({
                 args: [spender, parseEther(amount)],
@@ -123,7 +123,7 @@ export const LendAssetCard: React.FC = () => {
             disabled={!isApprovalSuccessful}
             onClick={() => {
               write({
-                args: [parseEther(inputAmount), address],
+                args: ["1000000000000000", address],
               });
             }}
           >
