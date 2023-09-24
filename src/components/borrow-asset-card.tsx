@@ -1,7 +1,9 @@
 // components/LoanCard.tsx
 import React, { useState } from "react";
-import { useAccount, useBalance, useFeeData } from "wagmi";
-import { USDCAddress } from "../constants/addresses";
+import { useAccount, useContractWrite } from "wagmi";
+import { wBTCAddress } from "../constants/addresses";
+import { parseEther } from "viem";
+import { wBtcAbi } from "../constants/abis/wBtc";
 
 export const BorrowCard: React.FC = () => {
   const { isConnected, address } = useAccount();
@@ -18,6 +20,14 @@ export const BorrowCard: React.FC = () => {
   // const { data, isError, isLoading } = useToken({
   //   address: '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72',
   // })
+
+  const { data, isLoading, isSuccess, write } = useContractWrite({
+    address: wBTCAddress,
+    abi: wBtcAbi,
+    functionName: "approve",
+  });
+
+  console.log("d", data, isSuccess);
 
   const collaterals = ["BTC", "USDC", "ETH"];
   const loanAssets = ["USDC", "ETH", "BTC"];
@@ -133,12 +143,30 @@ export const BorrowCard: React.FC = () => {
         </div>
 
         <div className="flex gap-2">
-          <button className="bg-green-500 text-white py-2 px-4 rounded">
-            Approve
-          </button>
-          <button className="bg-blue-500 text-white py-2 px-4 rounded">
-            Create
-          </button>
+          {!isSuccess && (
+            <button
+              className="bg-green-500 text-white py-2 px-4 rounded"
+              onClick={() => {
+                const spender = "0x7D1DD5DCCe1390E09357c9D49B4E05986D83d51e";
+                write({
+                  args: [spender, parseEther("1000000000000000000")],
+                  // spender: "asdasd"
+                  // amount: parseEther('0.01'),
+                });
+              }}
+            >
+              Approve
+            </button>
+          )}
+
+          {isSuccess && (
+            <button
+              className="bg-blue-500 text-white py-2 px-4 rounded"
+              onClick={() => {}}
+            >
+              Create
+            </button>
+          )}
         </div>
       </div>
     </div>

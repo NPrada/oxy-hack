@@ -162,17 +162,20 @@ const Home: NextPage = () => {
 
   return (
     <Layout>
+      <div className="flex justify-center pt-8 pb-16">
+        <h1 className="text-3xl font-bold">Protected Term Loans Made Easy!</h1>
+      </div>
 
       <div className="flex space-x-4 max-w-4xl m-auto">
         <Link href="/borrow" className="flex-1">
-          <div className="bg-[#52472E] flex justify-center items-center rounded-lg hover:bg-opacity-90 cursor-pointer transition">
+          <div className="bg-[#52472E] flex justify-center items-center rounded-2xl hover:bg-opacity-90 cursor-pointer transition">
             <div className="py-28 text-white text-2xl font-bold group-hover:text-opacity-80 transition">
               I want to Borrow
             </div>
           </div>
         </Link>
         <Link href="/lend" className="flex-1">
-          <div className="bg-[#52472E] flex justify-center items-center rounded-lg hover:bg-opacity-90 cursor-pointer transition">
+          <div className="bg-[#52472E] flex justify-center items-center rounded-2xl hover:bg-opacity-90 cursor-pointer transition">
             <div className="py-28 text-white text-2xl font-bold group-hover:text-opacity-80 transition">
               I want to Lend
             </div>
@@ -180,18 +183,6 @@ const Home: NextPage = () => {
         </Link>
       </div>
     </Layout>
-
-    // <Flex w="full" flexDirection={"column"} maxW="700px">
-    //   <Image
-    //     aria-label="WalletConnect"
-    //     src={
-    //       colorMode === "dark"
-    //         ? "/WalletConnect-white.svg"
-    //         : "/WalletConnect-black.svg"
-    //     }
-    //   />
-
-    // </Flex>
   );
 };
 
