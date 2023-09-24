@@ -123,7 +123,7 @@ export const LendAssetCard: React.FC = () => {
             disabled={!isApprovalSuccessful}
             onClick={() => {
               write({
-                args: ["1000000000000000", address],
+                args: [parseEther(inputAmount), address],
               });
             }}
           >
