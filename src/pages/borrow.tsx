@@ -68,7 +68,7 @@ const BorrowList: React.FC<BorrowListProps> = ({ positions }) => {
   const router = useRouter();
 
   return (
-    <Card className="p-4">
+    <Card className="p-4 max-w-3xl m-auto">
       <h2 className="text-xl font-bold mb-4">Loans</h2>
       <ul>
         {positions.map((position) => (
@@ -87,29 +87,33 @@ const BorrowList: React.FC<BorrowListProps> = ({ positions }) => {
               </div>
             </div>
 
-            <p>
-              <strong>Asset:</strong> {position.asset}
-            </p>
-            <p>
-              <strong>Amount:</strong> {position.amount}
-            </p>
-            <p>
-              <strong>Next Payment Due:</strong> {daysUntil(position.dueDate)}{" "}
-              days
-            </p>
-            <p>
-              <strong>Collateral Value:</strong> Initial: $
-              {position.initialDeposit}, Current: ${position.currentValue}
-            </p>
-            <Button
-              // type="secondary"
-              onClick={() => {
-                // Add functionality for repayment
-                console.log("Repaying for position:", position.id);
-              }}
-            >
-              Repay Loan
-            </Button>
+            <div className="flex items-end justify-between">
+              <div>
+                <p>
+                  <strong>Asset:</strong> {position.asset}
+                </p>
+                <p>
+                  <strong>Amount:</strong> {position.amount}
+                </p>
+                <p>
+                  <strong>Next Payment Due:</strong>{" "}
+                  {daysUntil(position.dueDate)} days
+                </p>
+                <p>
+                  <strong>Collateral Value:</strong> Initial: $
+                  {position.initialDeposit}, Current: ${position.currentValue}
+                </p>
+              </div>
+              <Button
+                // type="secondary"
+                onClick={() => {
+                  // Add functionality for repayment
+                  console.log("Repaying for position:", position.id);
+                }}
+              >
+                Repay Loan
+              </Button>
+            </div>
           </li>
         ))}
       </ul>
