@@ -1,33 +1,20 @@
 "use client";
 import type { NextPage } from "next";
 import { useCallback, useEffect, useState } from "react";
-import {
-  Accordion,
-  Button,
-  Flex,
-  Heading,
-  Image,
-  Tooltip,
-  useColorMode,
-  useToast,
-} from "@chakra-ui/react";
+import { useColorMode, useToast } from "@chakra-ui/react";
 import {
   useInitWeb3InboxClient,
   useManageSubscription,
   useW3iAccount,
 } from "@web3inbox/widget-react";
 import "@web3inbox/widget-react/dist/compiled.css";
+import ArrowDownTray from "@heroicons/react/20/solid/ArrowDownTrayIcon";
+import ArrowUpTray from "@heroicons/react/20/solid/ArrowUpTrayIcon";
 
 import { useAccount, usePublicClient, useSignMessage } from "wagmi";
-import { FaBell, FaBellSlash, FaPause, FaPlay } from "react-icons/fa";
-import { BsPersonFillCheck, BsSendFill } from "react-icons/bs";
 import useSendNotification from "../../utils/useSendNotification";
 import { useInterval } from "usehooks-ts";
-import Preferences from "../components/Preferences";
-import Messages from "../components/Messages";
-import Subscription from "../components/Subscription";
 import { sendNotification } from "../../utils/fetchNotify";
-import Subscribers from "../components/Subscribers";
 import { Layout } from "../components/layout";
 import Link from "next/link";
 import Arrow from "@heroicons/react/20/solid/ArrowLongDownIcon";
@@ -169,15 +156,18 @@ const Home: NextPage = () => {
       </div>
 
       <div className="flex justify-center pb-8 gap-40">
-        <Arrow className="h-40 w-40 rotate-45 text-[#dad6d3]" />
-        <Arrow className="h-40 w-40 -rotate-45 text-[#dad6d3]" />
+        <Arrow className="h-40 w-40 rotate-45 text-[#dad6d3]/5" />
+        <Arrow className="h-40 w-40 -rotate-45 text-[#dad6d3]/5" />
       </div>
 
-      <div className="flex space-x-4 max-w-4xl m-auto">
+      <div className="flex space-x-16 max-w-4xl m-auto">
         <Link href="/borrow" className="flex-1">
           <Card className="flex justify-center items-center rounded-2xl hover:bg-[#1b1b1a]/40 cursor-pointer transition">
             <div className="py-28 text-white text-2xl font-bold group-hover:text-opacity-80 transition">
               <p className="text-center"> I want to Borrow</p>
+              <div className="flex justify-center pt-4">
+                <ArrowDownTray className="w-20 h-20" />
+              </div>
             </div>
           </Card>
         </Link>
@@ -185,6 +175,9 @@ const Home: NextPage = () => {
           <Card className="flex justify-center items-center rounded-2xl hover:bg-[#1b1b1a]/40 cursor-pointer transition">
             <div className="block py-28 text-white text-2xl font-bold group-hover:text-opacity-80 transition">
               <p className="text-center">I want to Lend</p>
+              <div className="flex justify-center pt-4">
+                <ArrowUpTray className="w-20 h-20" />
+              </div>
             </div>
           </Card>
         </Link>
