@@ -4,7 +4,6 @@ import type { NextPage } from "next";
 import "@web3inbox/widget-react/dist/compiled.css";
 
 import { Layout } from "../components/layout";
-import { LendAssetCard } from "../components/lend-asset-card";
 import { BorrowCard } from "../components/borrow-asset-card";
 
 // const projectId = process.env.NEXT_PUBLIC_PROJECT_ID as string;

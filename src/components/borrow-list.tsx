@@ -20,7 +20,7 @@ const LendingList: React.FC<LendingListProps> = ({ positions }) => {
 
   return (
     <div className="bg-white rounded-lg shadow-md p-4">
-      <h2 className="text-xl font-bold mb-4">Loans</h2>
+      <h2 className="text-xl font-bold mb-2">Loans</h2>
       <ul>
         {positions.map((position) => (
           <li key={position.id} className="border-b border-gray-200 py-2">
@@ -42,6 +42,8 @@ const LendingList: React.FC<LendingListProps> = ({ positions }) => {
             </p>
             <Button
               onClick={() => {
+
+             
                 // Add functionality for repayment
                 console.log("Repaying for position:", position.id);
               }}

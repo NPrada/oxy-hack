@@ -27,6 +27,11 @@ createWeb3Modal({
   wagmiConfig,
   projectId,
   chains,
+  tokens: {
+    5: {
+      address: "0xF19162950528A40a27d922f52413d26f71B25926",
+    },
+  },
   themeVariables: {
     // '--wcm-accent-color': 'red',
     // "--wcm-accent-fill-color": 'red',

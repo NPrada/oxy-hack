@@ -14,6 +14,8 @@ import { useRouter } from "next/router";
 import { useLoansStorage } from "../hooks/storagehooks";
 import { LoadingSpinner } from "./loading-spinner";
 import { Button, Card } from "@radix-ui/themes";
+import { btcPrice } from "../pages/borrow";
+import { USDollar } from "./loanItem";
 
 export const BorrowCard: React.FC = () => {
   const { loans, saveLoans } = useLoansStorage();
@@ -47,15 +49,21 @@ export const BorrowCard: React.FC = () => {
     isLoading: waitedLoanDataIsLoading,
     isSuccess: waitedLoanDataSuccess,
   } = useWaitForTransaction(loanData);
+
   console.log("approvaldata", data);
   console.log("waitTransactionData", waitTransactionData);
   console.log("loanData", loanData);
   console.log("waitedLoanData", waitedLoanData);
+
   useEffect(() => {
-    saveLoans([...loans, waitedLoanData]);
+    if (waitedLoanData != null) {
+      const loanContract = `0x${waitedLoanData?.logs[8].topics[2].slice(26)}`;
+      console.log("loanContract", loanContract);
+      saveLoans([...loans, { ...waitedLoanData, loanContract: loanContract }]);
+    }
   }, [waitedLoanData, saveLoans, loans]);
 
-  const collaterals = ["BTC", "ETH"];
+  const collaterals = ["wBTC", "ETH"];
   const loanAssets = ["USDC", "USDT"];
   const intervals = ["weekly", "monthly"];
 
@@ -123,11 +131,6 @@ export const BorrowCard: React.FC = () => {
           </select>
         </div>
 
-        {/* Display Loan Amount */}
-        <div className="mb-4">
-          <span className=" text-sm font-bold">Loan Amount:</span> {loanAmount}
-        </div>
-
         {/* Repayment Interval Dropdown */}
         <div className="mb-4">
           <label className="block  text-sm font-bold mb-2">
@@ -161,12 +164,18 @@ export const BorrowCard: React.FC = () => {
       </div>
 
       <div className="pt-4 flex flex-col justify-between min-w-[260px]">
+        <div className="mb-1 text-lg font-bold">
+          <span className=" text-lg font-bold">Loan Amount:</span>{" "}
+          {USDollar.format(Number(collateralAmount) * btcPrice * 0.7)}
+        </div>
         {/* Interest Rate and Gas Cost */}
         <div className="mb-4">
           <p>
-            <strong>Interest Rate:</strong> 10%
+            <strong>Interest rate:</strong> 10%
           </p>
         </div>
+
+        {/* Display Loan Amount */}
 
         <div className="flex gap-2">
           {!isApproveSuccess ? (
