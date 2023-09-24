@@ -1,6 +1,6 @@
 // components/LoanCard.tsx
 import React, { useState } from "react";
-import { useAccount, useContractWrite } from "wagmi";
+import { useAccount, useContractWrite, useWaitForTransaction } from "wagmi";
 import {
   buttonFactory,
   collateralAddr,
@@ -12,22 +12,10 @@ import {
 import { parseEther } from "viem";
 import { wBtcAbi } from "../constants/abis/wBtc";
 import { loanRouterAbi } from "../constants/abis/loanRouter";
+import { useRouter } from "next/router";
 
 export const BorrowCard: React.FC = () => {
-  const { isConnected, address } = useAccount();
-
-  // const { data, isError, isLoading } = useBalance({
-  //   address,
-  //   // token: USDCAddress,
-  // });
-  // console.log("data", isError, isLoading, data);
-
-  // const { data: feeData } = useFeeData();
-  // console.log("feeData", feeData);
-
-  // const { data, isError, isLoading } = useToken({
-  //   address: '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72',
-  // })
+  const router = useRouter();
 
   const {
     data,
@@ -39,18 +27,18 @@ export const BorrowCard: React.FC = () => {
     functionName: "approve",
   });
 
+  const { data: waitTransactionData, isError } = useWaitForTransaction(data);
+
   const {
     data: loanData,
-    isLoading,
-    isSuccess,
+    isLoading: loanIsLoading,
+    isSuccess: loanIsCreated,
     write,
   } = useContractWrite({
     address: loanRouterAddr,
     abi: loanRouterAbi,
     functionName: "createAndBorrow",
   });
-
-  console.log("d", data, isApproveSuccess);
 
   const collaterals = ["BTC", "USDC", "ETH"];
   const loanAssets = ["USDC", "USDT"];
@@ -61,7 +49,11 @@ export const BorrowCard: React.FC = () => {
   const [selectedLoanAsset, setSelectedLoanAsset] = useState(loanAssets[0]);
   const [loanAmount, setLoanAmount] = useState(""); // Just for display
   const [selectedInterval, setSelectedInterval] = useState(intervals[0]);
-  const [numberOfPeriods, setNumberOfPeriods] = useState("1");
+  const [numberOfPeriods, setNumberOfPeriods] = useState<number>(Number("1"));
+
+  if (loanIsCreated) {
+    router.push("/borrow?isSuccess=true");
+  }
 
   return (
     <div className="bg-white rounded-lg shadow-md p-4 flex">
@@ -148,7 +140,7 @@ export const BorrowCard: React.FC = () => {
           <input
             type="number"
             value={numberOfPeriods}
-            onChange={(e) => setNumberOfPeriods(e.target.value)}
+            onChange={(e) => setNumberOfPeriods(Number(e.target.value))}
             className="w-full px-2 py-1 rounded border"
           />
         </div>
@@ -166,11 +158,11 @@ export const BorrowCard: React.FC = () => {
         </div>
 
         <div className="flex gap-2">
-          {!isApproveSuccess && (
+          {!isApproveSuccess ? (
             <button
               className="bg-green-500 text-white py-2 px-4 rounded"
               onClick={() => {
-                const spender = buttonFactory;
+                const spender = loanRouterAddr;
                 const amount = "1000000000000000000";
                 writeApprove({
                   args: [spender, parseEther(amount)],
@@ -181,15 +173,14 @@ export const BorrowCard: React.FC = () => {
             >
               Approve
             </button>
-          )}
-
-          {isApproveSuccess && (
+          ) : waitTransactionData && !loanIsLoading ? (
             <button
               className="bg-blue-500 text-white py-2 px-4 rounded"
               onClick={() => {
                 const collateralAmt = 10e18;
-                const paymentFreqSeconds = 604800;
-                const paymentsNum = 8;
+                const paymentFreqSeconds =
+                  selectedInterval === "weekly" ? 604800 : 2678400;
+                const paymentsNum = numberOfPeriods;
 
                 write({
                   args: [
@@ -205,6 +196,8 @@ export const BorrowCard: React.FC = () => {
             >
               Create
             </button>
+          ) : (
+            <div>Loading...</div>
           )}
         </div>
       </div>

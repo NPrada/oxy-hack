@@ -30,6 +30,7 @@ import { sendNotification } from "../../utils/fetchNotify";
 import Subscribers from "../components/Subscribers";
 import { Layout } from "../components/layout";
 import Link from "next/link";
+import Arrow from "@heroicons/react/20/solid/ArrowLongDownIcon";
 
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID as string;
 const appDomain = process.env.NEXT_PUBLIC_APP_DOMAIN as string;
@@ -164,6 +165,11 @@ const Home: NextPage = () => {
     <Layout>
       <div className="flex justify-center pt-8 pb-16">
         <h1 className="text-3xl font-bold">Protected Term Loans Made Easy!</h1>
+      </div>
+
+      <div className="flex justify-center pt-8 pb-8 gap-16">
+        <Arrow className="h-40 w-40 rotate-45 text-[#9F7B65]" />
+        <Arrow className="h-40 w-40 -rotate-45 text-[#9F7B65]" />
       </div>
 
       <div className="flex space-x-4 max-w-4xl m-auto">
