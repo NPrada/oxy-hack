@@ -15,6 +15,7 @@ import { loanRouterAbi } from "../constants/abis/loanRouter";
 import { useRouter } from "next/router";
 import { useLoansStorage } from "../hooks/storagehooks";
 import { LoadingSpinner } from "./loading-spinner";
+import { Card } from "@radix-ui/themes";
 
 export const BorrowCard: React.FC = () => {
   const { loans, saveLoans } = useLoansStorage();
@@ -61,11 +62,11 @@ export const BorrowCard: React.FC = () => {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 flex  max-w-3xl m-auto">
-      <div className="flex-1 pr-4 border-r border-gray-200">
+    <Card className=" p-4 flex  max-w-3xl m-auto">
+      <div className="flex-1 pr-4 border-b border-[#2e3037]">
         {/* Collateral Dropdown */}
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
+          <label className="block text-sm font-bold mb-2">
             Collateral Deposit
           </label>
           <select
@@ -83,7 +84,7 @@ export const BorrowCard: React.FC = () => {
 
         {/* Collateral Amount Input */}
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
+          <label className="block  text-sm font-bold mb-2">
             Amount of Collateral
           </label>
           <input
@@ -97,7 +98,7 @@ export const BorrowCard: React.FC = () => {
 
         {/* Loan Asset Dropdown */}
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
+          <label className="block  text-sm font-bold mb-2">
             Loan Asset
           </label>
           <select
@@ -115,13 +116,13 @@ export const BorrowCard: React.FC = () => {
 
         {/* Display Loan Amount */}
         <div className="mb-4">
-          <span className="text-gray-700 text-sm font-bold">Loan Amount:</span>{" "}
+          <span className=" text-sm font-bold">Loan Amount:</span>{" "}
           {loanAmount}
         </div>
 
         {/* Repayment Interval Dropdown */}
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
+          <label className="block  text-sm font-bold mb-2">
             Repayment Interval
           </label>
           <select
@@ -139,7 +140,7 @@ export const BorrowCard: React.FC = () => {
 
         {/* Number of Weeks/Months Input */}
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
+          <label className="block  text-sm font-bold mb-2">
             Number of {selectedInterval === "weekly" ? "Weeks" : "Months"}
           </label>
           <input
@@ -151,7 +152,7 @@ export const BorrowCard: React.FC = () => {
         </div>
       </div>
 
-      <div className="pl-4 flex flex-col justify-between min-w-[260px]">
+      <div className="pt-4 flex flex-col justify-between min-w-[260px]">
         {/* Interest Rate and Gas Cost */}
         <div className="mb-4">
           <p>
@@ -205,6 +206,6 @@ export const BorrowCard: React.FC = () => {
           )}
         </div>
       </div>
-    </div>
+    </Card>
   );
 };

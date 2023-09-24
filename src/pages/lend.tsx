@@ -30,7 +30,7 @@ const Home: NextPage = () => {
   return (
     <Layout>
       {/* <LendingList positions={positions} /> */}
-      <LendingList positions={positions}/>
+      <LendingList positions={positions} />
     </Layout>
 
     // <Flex w="full" flexDirection={"column"} maxW="700px">
@@ -68,7 +68,7 @@ const LendingList: React.FC<LendingListProps> = ({ positions }) => {
       <h2 className="text-xl font-bold mb-4">Lending Positions</h2>
       <ul>
         {positions.map((position) => (
-          <li key={position.id} className="border-b border-gray-200 py-2">
+          <li key={position.id} className="border-b border-[#2e3037] py-2">
             <p>
               <strong>Asset:</strong> {position.asset}
             </p>

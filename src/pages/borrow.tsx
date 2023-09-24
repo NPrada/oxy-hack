@@ -4,8 +4,10 @@ import type { NextPage } from "next";
 import "@web3inbox/widget-react/dist/compiled.css";
 
 import { Layout } from "../components/layout";
-import { Button } from "../components/button";
+// import { Button } from "../components/button";
 import { useRouter } from "next/router";
+import { ArrowRightIcon } from "@radix-ui/react-icons";
+import { Button, Card, Box, Text, Avatar, Flex } from "@radix-ui/themes";
 
 // const projectId = process.env.NEXT_PUBLIC_PROJECT_ID as string;
 // const appDomain = process.env.NEXT_PUBLIC_APP_DOMAIN as string;
@@ -66,11 +68,11 @@ const BorrowList: React.FC<BorrowListProps> = ({ positions }) => {
   const router = useRouter();
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-4">
+    <Card className="p-4">
       <h2 className="text-xl font-bold mb-4">Loans</h2>
       <ul>
         {positions.map((position) => (
-          <li key={position.id} className="border-b border-gray-200 py-2">
+          <li key={position.id} className="border-b border-[#2e3037] py-2">
             {/* Loading bar with USDC overlay */}
             <div className="relative bg-gray-300 rounded h-8 mb-2">
               <div
@@ -100,7 +102,7 @@ const BorrowList: React.FC<BorrowListProps> = ({ positions }) => {
               {position.initialDeposit}, Current: ${position.currentValue}
             </p>
             <Button
-              type="secondary"
+              // type="secondary"
               onClick={() => {
                 // Add functionality for repayment
                 console.log("Repaying for position:", position.id);
@@ -118,10 +120,10 @@ const BorrowList: React.FC<BorrowListProps> = ({ positions }) => {
             router.push("/borrow-asset");
           }}
         >
-          Open new loan
+          Open new loan <ArrowRightIcon />
         </Button>
       </div>
-    </div>
+    </Card>
   );
 };
 

@@ -2,10 +2,12 @@ import type { AppProps } from "next/app";
 import { WagmiConfig } from "wagmi";
 import { mainnet, goerli } from "wagmi/chains";
 import "@web3inbox/widget-react/dist/compiled.css";
+import "@radix-ui/themes/styles.css";
 
 import { createWeb3Modal, defaultWagmiConfig } from "@web3modal/wagmi/react";
 import Navbar from "../components/core/Navbar";
 import "../styles/globals.css";
+import { Theme } from "@radix-ui/themes";
 
 // 1. Get projectID at https://cloud.walletconnect.com
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID as string;
@@ -28,9 +30,8 @@ createWeb3Modal({
   themeVariables: {
     // '--wcm-accent-color': 'red',
     // "--wcm-accent-fill-color": 'red',
-    "--w3m-color-mix": "#FDF3C6",
-    "--w3m-color-mix-strength": 20,
-
+    "--w3m-color-mix": "#e93d82",
+    "--w3m-color-mix-strength": 40,
   },
 });
 
@@ -41,8 +42,15 @@ function MyApp({ Component, pageProps }: AppProps) {
       {/* @ts-ignore */}
       <WagmiConfig config={wagmiConfig}>
         {/* @ts-ignore */}
-
-        <Component {...pageProps} />
+        <Theme
+          appearance="dark"
+          accentColor="crimson"
+          grayColor="sand"
+          radius="large"
+          scaling="95%"
+        >
+          <Component {...pageProps} />
+        </Theme>
       </WagmiConfig>
       {/* </ChakraProvider> */}
     </>

@@ -23,7 +23,7 @@ const LendingList: React.FC<LendingListProps> = ({ positions }) => {
       <h2 className="text-xl font-bold mb-4">Loans</h2>
       <ul>
         {positions.map((position) => (
-          <li key={position.id} className="border-b border-gray-200 py-2">
+          <li key={position.id} className="border-b border-[#2e3037] py-2">
             {/* Loading bar with USDC overlay */}
             <div className="relative bg-gray-300 rounded h-4 mb-2">
               <div 
