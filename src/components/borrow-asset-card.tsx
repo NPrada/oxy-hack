@@ -1,9 +1,17 @@
 // components/LoanCard.tsx
 import React, { useState } from "react";
 import { useAccount, useContractWrite } from "wagmi";
-import { wBTCAddress } from "../constants/addresses";
+import {
+  buttonFactory,
+  collateralAddr,
+  lendingPoolAddr,
+  loanFactory,
+  loanRouterAddr,
+  wBTCAddress,
+} from "../constants/addresses";
 import { parseEther } from "viem";
 import { wBtcAbi } from "../constants/abis/wBtc";
+import { loanRouterAbi } from "../constants/abis/loanRouter";
 
 export const BorrowCard: React.FC = () => {
   const { isConnected, address } = useAccount();
@@ -21,16 +29,31 @@ export const BorrowCard: React.FC = () => {
   //   address: '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72',
   // })
 
-  const { data, isLoading, isSuccess, write } = useContractWrite({
+  const {
+    data,
+    isSuccess: isApproveSuccess,
+    write: writeApprove,
+  } = useContractWrite({
     address: wBTCAddress,
     abi: wBtcAbi,
     functionName: "approve",
   });
 
-  console.log("d", data, isSuccess);
+  const {
+    data: loanData,
+    isLoading,
+    isSuccess,
+    write,
+  } = useContractWrite({
+    address: loanRouterAddr,
+    abi: loanRouterAbi,
+    functionName: "createAndBorrow",
+  });
+
+  console.log("d", data, isApproveSuccess);
 
   const collaterals = ["BTC", "USDC", "ETH"];
-  const loanAssets = ["USDC", "ETH", "BTC"];
+  const loanAssets = ["USDC", "USDT"];
   const intervals = ["weekly", "monthly"];
 
   const [selectedCollateral, setSelectedCollateral] = useState(collaterals[0]);
@@ -143,13 +166,14 @@ export const BorrowCard: React.FC = () => {
         </div>
 
         <div className="flex gap-2">
-          {!isSuccess && (
+          {!isApproveSuccess && (
             <button
               className="bg-green-500 text-white py-2 px-4 rounded"
               onClick={() => {
-                const spender = "0x7D1DD5DCCe1390E09357c9D49B4E05986D83d51e";
-                write({
-                  args: [spender, parseEther("1000000000000000000")],
+                const spender = buttonFactory;
+                const amount = "1000000000000000000";
+                writeApprove({
+                  args: [spender, parseEther(amount)],
                   // spender: "asdasd"
                   // amount: parseEther('0.01'),
                 });
@@ -159,10 +183,25 @@ export const BorrowCard: React.FC = () => {
             </button>
           )}
 
-          {isSuccess && (
+          {isApproveSuccess && (
             <button
               className="bg-blue-500 text-white py-2 px-4 rounded"
-              onClick={() => {}}
+              onClick={() => {
+                const collateralAmt = 10e18;
+                const paymentFreqSeconds = 604800;
+                const paymentsNum = 8;
+
+                write({
+                  args: [
+                    loanFactory,
+                    wBTCAddress,
+                    lendingPoolAddr,
+                    collateralAmt,
+                    paymentFreqSeconds,
+                    paymentsNum,
+                  ],
+                });
+              }}
             >
               Create
             </button>
