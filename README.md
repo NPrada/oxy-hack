@@ -14,7 +14,10 @@ npm install
 npm run dev
 ```
 
-The front end is built using nextjs, wagmi, and tailwind for styling
+The front end is built using nextjs, wagmi for the interfacing with the smart contracts.
+We used walletconnect to allow users to use a variety of wallets as well as accessing user's wallet addresses and displaying balances.
+For stying I used tailwind and Radix UI for some good primitives.
+
 
 For the repository containing the smart contract code go [here](https://github.com/G-Yes95/oxy-hack)
 
