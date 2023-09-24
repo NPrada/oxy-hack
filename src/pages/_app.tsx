@@ -36,7 +36,7 @@ createWeb3Modal({
     // '--wcm-accent-color': 'red',
     // "--wcm-accent-fill-color": 'red',
     "--w3m-color-mix": "#e93d82",
-    "--w3m-color-mix-strength": 40,
+    "--w3m-color-mix-strength": 50,
   },
 });
 
