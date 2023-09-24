@@ -65,7 +65,7 @@ const LendingList: React.FC<LendingListProps> = ({ positions }) => {
   const router = useRouter();
 
   return (
-    <Card className=" p-4">
+    <Card className="max-w-xl p-4 m-auto">
       <h2 className="text-xl font-bold mb-4">Lending Positions</h2>
       <ul>
         {positions.map((position) => (

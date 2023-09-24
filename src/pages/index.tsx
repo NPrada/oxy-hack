@@ -31,6 +31,7 @@ import Subscribers from "../components/Subscribers";
 import { Layout } from "../components/layout";
 import Link from "next/link";
 import Arrow from "@heroicons/react/20/solid/ArrowLongDownIcon";
+import { Card } from "@radix-ui/themes";
 
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID as string;
 const appDomain = process.env.NEXT_PUBLIC_APP_DOMAIN as string;
@@ -163,29 +164,29 @@ const Home: NextPage = () => {
 
   return (
     <Layout>
-      <div className="flex justify-center pt-8 pb-16">
+      <div className="flex justify-center pt-8 pb-12">
         <h1 className="text-3xl font-bold">Protected Term Loans Made Easy!</h1>
       </div>
 
-      <div className="flex justify-center pt-8 pb-8 gap-16">
-        <Arrow className="h-40 w-40 rotate-45 text-[#9F7B65]" />
-        <Arrow className="h-40 w-40 -rotate-45 text-[#9F7B65]" />
+      <div className="flex justify-center pb-8 gap-40">
+        <Arrow className="h-40 w-40 rotate-45 text-[#dad6d3]" />
+        <Arrow className="h-40 w-40 -rotate-45 text-[#dad6d3]" />
       </div>
 
       <div className="flex space-x-4 max-w-4xl m-auto">
         <Link href="/borrow" className="flex-1">
-          <div className="bg-[#52472E] flex justify-center items-center rounded-2xl hover:bg-opacity-90 cursor-pointer transition">
+          <Card className="flex justify-center items-center rounded-2xl hover:bg-[#1b1b1a]/40 cursor-pointer transition">
             <div className="py-28 text-white text-2xl font-bold group-hover:text-opacity-80 transition">
-              I want to Borrow
+              <p className="text-center"> I want to Borrow</p>
             </div>
-          </div>
+          </Card>
         </Link>
         <Link href="/lend" className="flex-1">
-          <div className="bg-[#52472E] flex justify-center items-center rounded-2xl hover:bg-opacity-90 cursor-pointer transition">
-            <div className="py-28 text-white text-2xl font-bold group-hover:text-opacity-80 transition">
-              I want to Lend
+          <Card className="flex justify-center items-center rounded-2xl hover:bg-[#1b1b1a]/40 cursor-pointer transition">
+            <div className="block py-28 text-white text-2xl font-bold group-hover:text-opacity-80 transition">
+              <p className="text-center">I want to Lend</p>
             </div>
-          </div>
+          </Card>
         </Link>
       </div>
     </Layout>
