@@ -117,7 +117,7 @@ const BorrowList: React.FC<BorrowListProps> = ({ positions }) => {
           </li>
         ))}
       </ul>
-      <div className="flex justify-center">
+      <div className="flex justify-center mt-4">
         {" "}
         <Button
           onClick={() => {
