@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Button, Card } from "@radix-ui/themes";
 import { useAccount, useContractWrite, useWaitForTransaction } from "wagmi";
@@ -12,8 +12,11 @@ import { wBtcAbi } from "../constants/abis/wBtc";
 import { parseEther } from "viem";
 import { LoadingSpinner } from "./loading-spinner";
 import { lendingPoolAbi } from "../constants/abis/lendingPool";
+import { useLiquidityStorage } from "../hooks/storagehooks";
+import { useRouter } from "next/router";
 
 export const LendAssetCard: React.FC = () => {
+  const router = useRouter();
   const assets = ["USDC", "USDT"];
   const [selectedAsset, setSelectedAsset] = useState(assets[0]);
   const [inputAmount, setInputAmount] = useState("");
@@ -61,6 +64,18 @@ export const LendAssetCard: React.FC = () => {
     isLoading: isLoading4,
     isSuccess: waitedLoanDataSuccess,
   } = useWaitForTransaction(loanDataReceived);
+
+  const { loans, saveLoans } = useLiquidityStorage();
+
+  useEffect(() => {
+    if (waitedFinalData != null) {
+      saveLoans([...loans, { loanAmount: inputAmount, asset: selectedAsset }]);
+    }
+  }, [waitedFinalData, saveLoans, loans, inputAmount, selectedAsset]);
+
+  if (waitedFinalData) {
+    router.push("/lend?isSuccess=true");
+  }
 
   return (
     <div className="max-w-xl flex flex-col justify-center m-auto">

@@ -7,6 +7,7 @@ import { Layout } from "../components/layout";
 import { useRouter } from "next/router";
 import { Button, Card } from "@radix-ui/themes";
 import { ArrowRightIcon } from "@radix-ui/react-icons";
+import { useLiquidityStorage } from "../hooks/storagehooks";
 
 // const projectId = process.env.NEXT_PUBLIC_PROJECT_ID as string;
 // const appDomain = process.env.NEXT_PUBLIC_APP_DOMAIN as string;
@@ -63,24 +64,28 @@ interface LendingListProps {
 
 const LendingList: React.FC<LendingListProps> = ({ positions }) => {
   const router = useRouter();
+  const { loans } = useLiquidityStorage();
 
   return (
     <Card className="max-w-xl p-4 m-auto">
       <h2 className="text-xl font-bold mb-4">Lending Positions</h2>
       <ul>
-        {positions.map((position) => (
-          <li key={position.id} className="border-b border-[#2e3037] py-2">
-            <p>
-              <strong>Asset:</strong> {position.asset}
-            </p>
-            <p>
-              <strong>Amount:</strong> {position.amount}
-            </p>
-            <p>
-              <strong>APY:</strong> {position.apy}%
-            </p>
-          </li>
-        ))}
+        {loans.map((loan, i) => {
+          const position = positions[i];
+          return (
+            <li key={position.id} className="border-b border-[#2e3037] py-2">
+              <p>
+                <strong>Asset:</strong> {loan.asset}
+              </p>
+              <p>
+                <strong>Amount:</strong> {loan.loanAmount}
+              </p>
+              <p>
+                <strong>APY:</strong> {position.apy}%
+              </p>
+            </li>
+          );
+        })}
       </ul>
       <Button
         className="mt-4"
