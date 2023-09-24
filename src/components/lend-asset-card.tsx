@@ -1,11 +1,67 @@
 import React, { useState } from "react";
 
 import { Button, Card } from "@radix-ui/themes";
+import { useAccount, useContractWrite, useWaitForTransaction } from "wagmi";
+import {
+  USDCAddress,
+  USDCLendingPool,
+  USDTAddress,
+  USDTLendingPool,
+  lendingPoolAddr,
+} from "../constants/addresses";
+import { wBtcAbi } from "../constants/abis/wBtc";
+import { parseEther } from "viem";
+import { LoadingSpinner } from "./loading-spinner";
+import { lendingPoolAbi } from "../constants/abis/lendingPool";
 
 export const LendAssetCard: React.FC = () => {
-  const assets = ["BTC", "USDC", "ETH"];
+  const assets = ["USDC", "USDT"];
   const [selectedAsset, setSelectedAsset] = useState(assets[0]);
   const [inputAmount, setInputAmount] = useState("");
+
+  const { address } = useAccount();
+
+  const currencyAddrToUse =
+    selectedAsset === "USDT" ? USDTAddress : USDCAddress;
+
+  const poolAddrToUse =
+    selectedAsset === "USDT" ? USDTLendingPool : USDCLendingPool;
+
+  console.log(selectedAsset, "currencyAddrToUse", currencyAddrToUse);
+  console.log(selectedAsset, "poolAddrToUse", poolAddrToUse);
+
+  const {
+    data,
+    isLoading: isLoading1,
+    write: writeApprove,
+  } = useContractWrite({
+    address: currencyAddrToUse,
+    abi: wBtcAbi,
+    functionName: "approve",
+  });
+
+  const {
+    data: waitTransactionData,
+    isLoading: isLoading2,
+    isSuccess: isApprovalSuccessful,
+  } = useWaitForTransaction(data);
+
+  const {
+    data: loanDataReceived,
+    isLoading: isLoading3,
+    isSuccess: loanIsCreated,
+    write,
+  } = useContractWrite({
+    address: poolAddrToUse,
+    abi: lendingPoolAbi,
+    functionName: "deposit",
+  });
+
+  const {
+    data: waitedFinalData,
+    isLoading: isLoading4,
+    isSuccess: waitedLoanDataSuccess,
+  } = useWaitForTransaction(loanDataReceived);
 
   return (
     <div className="max-w-xl flex flex-col justify-center m-auto">
@@ -41,10 +97,38 @@ export const LendAssetCard: React.FC = () => {
         </div>
 
         <div className="pt-4 flex flex-col justify-between">
-          <Button variant="outline" className="mb-2  py-2 px-4">
-            Approve
+          <Button
+            disabled={isApprovalSuccessful}
+            variant="outline"
+            className="mb-2  py-2 px-4"
+            onClick={() => {
+              const spender = currencyAddrToUse;
+              const amount = "1000000000000000000";
+              writeApprove({
+                args: [spender, parseEther(amount)],
+                // spender: "asdasd"
+                // amount: parseEther('0.01'),
+              });
+            }}
+          >
+            {isLoading1 || isLoading2 ? (
+              <div className="p-1">
+                <LoadingSpinner />
+              </div>
+            ) : (
+              "Approve"
+            )}
           </Button>
-          <Button>Deposit</Button>
+          <Button
+            disabled={!isApprovalSuccessful}
+            onClick={() => {
+              write({
+                args: [parseEther(inputAmount), address],
+              });
+            }}
+          >
+            Deposit
+          </Button>
         </div>
       </Card>
     </div>
