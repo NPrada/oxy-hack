@@ -4,8 +4,9 @@ import type { NextPage } from "next";
 import "@web3inbox/widget-react/dist/compiled.css";
 
 import { Layout } from "../components/layout";
-import { Button } from "../components/button";
 import { useRouter } from "next/router";
+import { Button, Card } from "@radix-ui/themes";
+import { ArrowRightIcon } from "@radix-ui/react-icons";
 
 // const projectId = process.env.NEXT_PUBLIC_PROJECT_ID as string;
 // const appDomain = process.env.NEXT_PUBLIC_APP_DOMAIN as string;
@@ -64,7 +65,7 @@ const LendingList: React.FC<LendingListProps> = ({ positions }) => {
   const router = useRouter();
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-4">
+    <Card className=" p-4">
       <h2 className="text-xl font-bold mb-4">Lending Positions</h2>
       <ul>
         {positions.map((position) => (
@@ -82,12 +83,13 @@ const LendingList: React.FC<LendingListProps> = ({ positions }) => {
         ))}
       </ul>
       <Button
+        className="mt-4"
         onClick={() => {
           router.push("/lend-asset");
         }}
       >
-        Open Position
+        Open new position <ArrowRightIcon />
       </Button>
-    </div>
+    </Card>
   );
 };
