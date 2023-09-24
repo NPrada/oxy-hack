@@ -1,9 +1,7 @@
 // components/LoanCard.tsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAccount, useContractWrite, useWaitForTransaction } from "wagmi";
 import {
-  buttonFactory,
-  collateralAddr,
   lendingPoolAddr,
   loanFactory,
   loanRouterAddr,
@@ -15,7 +13,7 @@ import { loanRouterAbi } from "../constants/abis/loanRouter";
 import { useRouter } from "next/router";
 import { useLoansStorage } from "../hooks/storagehooks";
 import { LoadingSpinner } from "./loading-spinner";
-import { Card } from "@radix-ui/themes";
+import { Button, Card } from "@radix-ui/themes";
 
 export const BorrowCard: React.FC = () => {
   const { loans, saveLoans } = useLoansStorage();
@@ -44,6 +42,19 @@ export const BorrowCard: React.FC = () => {
     functionName: "createAndBorrow",
   });
 
+  const {
+    data: waitedLoanData,
+    isLoading: waitedLoanDataIsLoading,
+    isSuccess: waitedLoanDataSuccess,
+  } = useWaitForTransaction(loanData);
+  console.log("approvaldata", data);
+  console.log("waitTransactionData", waitTransactionData);
+  console.log("loanData", loanData);
+  console.log("waitedLoanData", waitedLoanData);
+  useEffect(() => {
+    saveLoans([...loans, waitedLoanData]);
+  }, [waitedLoanData, saveLoans, loans]);
+
   const collaterals = ["BTC", "ETH"];
   const loanAssets = ["USDC", "USDT"];
   const intervals = ["weekly", "monthly"];
@@ -55,9 +66,9 @@ export const BorrowCard: React.FC = () => {
   const [selectedInterval, setSelectedInterval] = useState(intervals[0]);
   const [numberOfPeriods, setNumberOfPeriods] = useState<number>(Number("1"));
 
-  if (loanIsCreated) {
+  if (waitedLoanDataSuccess) {
     console.log("loanData", loanData);
-    saveLoans([...loans, loanData]);
+
     router.push("/borrow?isSuccess=true");
   }
 
@@ -98,9 +109,7 @@ export const BorrowCard: React.FC = () => {
 
         {/* Loan Asset Dropdown */}
         <div className="mb-4">
-          <label className="block  text-sm font-bold mb-2">
-            Loan Asset
-          </label>
+          <label className="block  text-sm font-bold mb-2">Loan Asset</label>
           <select
             value={selectedLoanAsset}
             onChange={(e) => setSelectedLoanAsset(e.target.value)}
@@ -116,8 +125,7 @@ export const BorrowCard: React.FC = () => {
 
         {/* Display Loan Amount */}
         <div className="mb-4">
-          <span className=" text-sm font-bold">Loan Amount:</span>{" "}
-          {loanAmount}
+          <span className=" text-sm font-bold">Loan Amount:</span> {loanAmount}
         </div>
 
         {/* Repayment Interval Dropdown */}
@@ -162,8 +170,8 @@ export const BorrowCard: React.FC = () => {
 
         <div className="flex gap-2">
           {!isApproveSuccess ? (
-            <button
-              className="bg-green-500 text-white py-2 px-4 rounded"
+            <Button
+              className=" py-2 px-4"
               onClick={() => {
                 const spender = loanRouterAddr;
                 const amount = "1000000000000000000";
@@ -175,10 +183,12 @@ export const BorrowCard: React.FC = () => {
               }}
             >
               Approve
-            </button>
-          ) : waitTransactionData && !loanIsLoading ? (
-            <button
-              className="bg-blue-500 text-white py-2 px-4 rounded"
+            </Button>
+          ) : waitTransactionData &&
+            !loanIsLoading &&
+            !waitedLoanDataIsLoading ? (
+            <Button
+              className="py-2 px-4"
               onClick={() => {
                 const collateralAmt = 10e18;
                 const paymentFreqSeconds =
@@ -198,7 +208,7 @@ export const BorrowCard: React.FC = () => {
               }}
             >
               Create
-            </button>
+            </Button>
           ) : (
             <>
               <div>Loading...</div> <LoadingSpinner />

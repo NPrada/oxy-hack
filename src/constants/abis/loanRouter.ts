@@ -86,7 +86,13 @@ export const loanRouterAbi = [
       },
     ],
     name: "createAndBorrow",
-    outputs: [],
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
     stateMutability: "nonpayable",
     type: "function",
   },

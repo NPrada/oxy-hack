@@ -7,7 +7,9 @@ export const useLoansStorage = () => {
 
   const saveLoans = (loans: any[]) => {
     try {
-      localStorage.setItem("loans", JSON.stringify(loans));
+      const replacer = (key: string, value: any) =>
+        typeof value === "bigint" ? value.toString() : value;
+      localStorage.setItem("loans", JSON.stringify(loans, replacer));
       setStatus("success");
     } catch (error) {
       setStatus("error");
